@@ -14,7 +14,7 @@ class ImagerController extends BaseController {
     var self = this;
     gm(resolve('../../img/晚安日签修改.png')).
     toBuffer('PNG',function (err, buffer) {
-      if (err) return handle(err);
+      if (err) return console.log(err);
       console.log('done!');
       self.res.writeHead('200', {'Content-Type': 'image/jpeg'});
       self.res.end(buffer,'binary');
