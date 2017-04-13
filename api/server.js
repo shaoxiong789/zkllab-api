@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var routers = require('./routers.js')
 app.use(routers)
-var server = app.listen(8088,'127.0.0.1' ,function () {
+var server = app.listen(8088,'0.0.0.0' ,function () {
 
   var host = server.address().address
   var port = server.address().port
