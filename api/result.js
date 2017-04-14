@@ -7,7 +7,7 @@ module.exports = {
       result : result?result:null
     }
   },
-  error(code,msg){
+  error({code,msg}){
 
     return {
       code : code?code:-1,

@@ -9,7 +9,10 @@ module.exports = {
       result: result ? result : null
     };
   },
-  error: function error(code, msg) {
+  error: function error(_ref) {
+    var code = _ref.code,
+        msg = _ref.msg;
+
 
     return {
       code: code ? code : -1,

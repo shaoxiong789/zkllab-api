@@ -36,10 +36,14 @@ class ImagerController extends BaseController {
             this.res.json(result.success(doc))
           })
         },()=>{
-          this.res.json(result.error("上传文件失败"))
+          this.res.json(result.error({
+            msg:"上传文件失败"
+          }))
         });
       }else{
-        this.res.json(result.error("请检查请求参数错误"))
+        this.res.json(result.error({
+          msg:"请检查请求参数"
+        }))
       }
     })
 

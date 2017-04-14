@@ -87,8 +87,7 @@ var ImagerController = function (_BaseController) {
       // 解析一个文件上传
       var form = new _multiparty2.default.Form();
       form.parse(this.req, function (err, fields, files) {
-        console.log(fields);
-        if (fields.img[0]) {
+        if (fields.img) {
           var img = fields.img[0];
           var md5id = (0, _md2.default)(img).substr(0, 24);
           var imgname = md5id + '.png';
@@ -100,8 +99,14 @@ var ImagerController = function (_BaseController) {
               _this2.res.json(_result2.default.success(doc));
             });
           }, function () {
-            _this2.res.json(_result2.default.error());
+            _this2.res.json(_result2.default.error({
+              msg: "上传文件失败"
+            }));
           });
+        } else {
+          _this2.res.json(_result2.default.error({
+            msg: "请检查请求参数"
+          }));
         }
       });
     }
