@@ -24,7 +24,6 @@ class ImagerController extends BaseController {
     // 解析一个文件上传
     var form = new multiparty.Form();
     form.parse(this.req, (err, fields, files) =>{
-      console.log(fields)
       if(fields.img){
         var img = fields.img[0];
         var md5id = md5(img).substr(0,24);
@@ -37,8 +36,10 @@ class ImagerController extends BaseController {
             this.res.json(result.success(doc))
           })
         },()=>{
-          this.res.json(result.error())
+          this.res.json(result.error("上传文件失败"))
         });
+      }else{
+        this.res.json(result.error("请检查请求参数错误"))
       }
     })
 
