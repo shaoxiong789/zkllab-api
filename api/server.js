@@ -1,7 +1,13 @@
 var express = require('express');
+var bodyParser = require('body-parser')
 var app = express();
 var routers = require('./routers.js')
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(routers)
+
+
 var server = app.listen(8088,'0.0.0.0' ,function () {
 
   var host = server.address().address
