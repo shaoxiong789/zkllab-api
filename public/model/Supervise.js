@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function () {
-  var mongoose = require('../../mongopool.js')();
+  var mongoose = require('../mongoConnect.js')();
   var Schema = mongoose.Schema,
       ObjectId = Schema.ObjectId;
   var SuperviseSchema = new Schema({

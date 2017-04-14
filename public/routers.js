@@ -20,4 +20,13 @@ router.get('/login', 'LoginController#login');
 // 注册
 router.get('/register', 'LoginController#register');
 
+// 生产打卡图片
+router.get('/imager/card', 'ImagerController#card');
+
+router.post('/imager/upload', 'ImagerController#upload');
+
+router.post('/imager/remove', 'ImagerController#remove');
+
+router.get('/imager/list', 'ImagerController#list');
+
 module.exports = router.routes();

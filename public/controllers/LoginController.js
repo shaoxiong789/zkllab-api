@@ -87,8 +87,9 @@ var LoginController = function (_BaseController) {
           }
         },
         '验证数据库中是否存在': function _() {
+          console.log(8);
           _Supervise2.default.findOne({ username: 'admin' }).then(function (doc) {
-            res.send(doc);
+            response.send(doc);
           });
         },
         '注册账号': function _() {

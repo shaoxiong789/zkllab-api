@@ -1,7 +1,7 @@
 module.exports =
 (function(){
   var mongoose = require('../mongoConnect.js')()
-  var Schema = mongoose.Schema,
+  var Schema = mongoose.Schema
   // ObjectId = Schema.ObjectId;
   var ClockRecordSchema = new Schema({
       userId        : String, //用户ID
