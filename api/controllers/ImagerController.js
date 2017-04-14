@@ -25,7 +25,7 @@ class ImagerController extends BaseController {
     var form = new multiparty.Form();
     form.parse(this.req, (err, fields, files) =>{
       console.log(fields)
-      if(fields.img[0]){
+      if(fields.img){
         var img = fields.img[0];
         var md5id = md5(img).substr(0,24);
         var imgname = `${md5id}.png`
