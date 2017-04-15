@@ -19,16 +19,19 @@ class ImagerController extends BaseController {
   }
   // 上传图片
   upload(){
-    // var img = fs.readFileSync(resolve('../../img/brandNewImg.jpeg'));
+    // var img = fs.readFileSync(resolve('../../img/WechatIMG482.jpeg'));
+    // console.log(img)
     // console.log(md5(img));
     // 解析一个文件上传
     var form = new multiparty.Form();
     form.parse(this.req, (err, fields, files) =>{
       if(fields.img){
-        var img = fields.img[0];
-        var md5id = md5(img).substr(0,24);
+        var img = fields.img[0].replace(/^data:image\/\w+;base64,/, '');
+
+        var imgBuffer = new Buffer(img,'base64');
+        var md5id = md5(imgBuffer).substr(0,24);
         var imgname = `${md5id}.png`
-        qiniuUtil.upload(img,imgname,(ret)=>{
+        qiniuUtil.upload(imgBuffer,imgname,(ret)=>{
           mongoUtil.updateOrSave(Imager,{
             _id:md5id,
             pathname:imgname

@@ -1,6 +1,7 @@
 module.exports =
 (function(){
   var qiniu = require('qiniu');
+  var request = require('request')
 
   //需要填写你的 Access Key 和 Secret Key
   qiniu.conf.ACCESS_KEY = 'gHZ8ZjFPyIaFm7VBv2lyNrVqfMnLw0V98YLvFi3-';
@@ -28,11 +29,7 @@ module.exports =
           error();
         }
     });
-  }
-
-  //调用uploadFile上传
-  // uploadFile(token, key, img);
-
+  };
 
   return {
     upload(img,key,succeed,error){
@@ -51,6 +48,42 @@ module.exports =
           error(err)
         }
       });
+    },
+    stat(key,succeed,error){
+      //构建bucketmanager对象
+      var client = new qiniu.rs.Client();
+      //你要测试的空间， 并且这个key在你空间中存在
+
+      //获取文件信息
+      client.stat(bucket, key, function(err, ret) {
+        if (!err) {
+          succeed(ret)
+        } else {
+          error(err)
+        }
+      });
+    },
+    request: function(key){
+      return new Promise((resolve, reject)=>{
+        request.get({
+            url:'http://oo8xbcend.bkt.clouddn.com/'+key,
+            encoding:null
+        },
+        (err, resp, body)=>{
+          if(!err){
+            resolve({
+              response:resp,
+              body:body
+            })
+          }else{
+            reject(err)
+          }
+          // // console.log(body.toString('base64'));
+          // this.res.writeHead(200, {"Content-Type": 'image/jpeg'});
+          // this.res.write(body, "binary");
+          // this.res.end();
+        })
+      })
     }
   }
 })()

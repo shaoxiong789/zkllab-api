@@ -1,5 +1,6 @@
 'use strict';
 
+//打卡记录
 module.exports = function () {
   var mongoose = require('../mongoConnect.js')();
   var Schema = mongoose.Schema;

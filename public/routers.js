@@ -29,4 +29,10 @@ router.post('/imager/remove', 'ImagerController#remove');
 
 router.get('/imager/list', 'ImagerController#list');
 
+router.post('/clock/setting', 'ClockRecordController#setting');
+
+router.get('/clock/setting', 'ClockRecordController#getting');
+
+router.get('/clock/tap', 'ClockRecordController#tap');
+
 module.exports = router.routes();

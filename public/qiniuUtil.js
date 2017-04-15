@@ -1,5 +1,5 @@
 'use strict';
-
+var request = require('request')
 module.exports = function () {
   var qiniu = require('qiniu');
 
@@ -52,6 +52,29 @@ module.exports = function () {
           error(err);
         }
       });
+    },
+    give: function(key){
+      console.log('requ')
+      return new Promise((resolve, reject)=>{
+        request.get({
+            url:'http://oo8xbcend.bkt.clouddn.com/'+key,
+            encoding:null
+        },
+        (err, resp, body)=>{
+          if(!err){
+            resolve({
+              response:resp,
+              body:body
+            })
+          }else{
+            reject(err)
+          }
+          // console.log(body.toString('base64'));
+          this.res.writeHead(200, {"Content-Type": 'image/jpeg'});
+          this.res.write(body, "binary");
+          this.res.end();
+        })
+      })
     }
   };
 }();

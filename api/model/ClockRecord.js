@@ -1,3 +1,4 @@
+//打卡记录
 module.exports =
 (function(){
   var mongoose = require('../mongoConnect.js')()

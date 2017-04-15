@@ -11,12 +11,24 @@ router.get('/login', 'LoginController#login');
 router.get('/register', 'LoginController#register');
 
 // 生产打卡图片
-router.get('/imager/card', 'ImagerController#card');
+// router.get('/imager/card', 'ImagerController#card');
 
+//上传图片
 router.post('/imager/upload', 'ImagerController#upload');
 
+//删除图片
 router.post('/imager/remove', 'ImagerController#remove');
 
+//图片资源列表
 router.get('/imager/list','ImagerController#list')
+
+//打卡时间设置
+router.post('/clock/setting','ClockRecordController#setting')
+
+//获取打卡时间
+router.get('/clock/setting','ClockRecordController#getting')
+
+//用户打卡
+router.get('/clock/tap','ClockRecordController#tap')
 
 module.exports = router.routes();

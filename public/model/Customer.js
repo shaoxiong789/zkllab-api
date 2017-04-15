@@ -16,7 +16,9 @@ module.exports = function () {
         mornCredits: Number, //早上打卡的积分
         nightCredits: Number, //晚上打卡的积分
         openid: String, //微信唯一标示
-        headUrl: String });
+        headUrl: String, //头像url
+        friends: Array
+    });
     var Customer = mongoose.model('Customer', CustomerSchema);
     return Customer;
 }();
