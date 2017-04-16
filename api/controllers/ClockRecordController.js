@@ -16,7 +16,7 @@ class ClockRecordController extends BaseController {
     super();
   }
 
-
+  //用户打卡
   async tap(){
     //打卡人
     var userId = this.req.body.userId;

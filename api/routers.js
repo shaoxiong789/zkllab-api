@@ -31,4 +31,10 @@ router.get('/clock/setting','ClockRecordController#getting')
 //用户打卡
 router.get('/clock/tap','ClockRecordController#tap')
 
+//保存日签设置
+router.post('/clock/calendar/save','ClockCalendarController#save')
+
+//获取日签列表
+router.get('/clock/calendar/list','ClockCalendarController#list')
+
 module.exports = router.routes();
