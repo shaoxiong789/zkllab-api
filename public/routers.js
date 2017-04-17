@@ -20,4 +20,19 @@ router.get('/login', 'LoginController#login');
 // 注册
 router.get('/register', 'LoginController#register');
 
+// 生产打卡图片
+router.get('/imager/card', 'ImagerController#card');
+
+router.post('/imager/upload', 'ImagerController#upload');
+
+router.post('/imager/remove', 'ImagerController#remove');
+
+router.get('/imager/list', 'ImagerController#list');
+
+router.post('/clock/setting', 'ClockRecordController#setting');
+
+router.get('/clock/setting', 'ClockRecordController#getting');
+
+router.get('/clock/tap', 'ClockRecordController#tap');
+
 module.exports = router.routes();

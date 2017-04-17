@@ -34,8 +34,9 @@ class LoginController extends BaseController {
 
       },
       '验证数据库中是否存在':function(){
+        console.log(8)
         Supervise.findOne({username:'admin'}).then(function(doc){
-          res.send(doc);
+          response.send(doc);
         })
       },
       '注册账号':function(){
