@@ -6,7 +6,6 @@ import result from '../result.js'
 import fs from 'fs'
 import path from 'path';
 import images from 'images'
-import axios from 'axios'
 import qiniuUtil from '../qiniuUtil.js'
 import http from 'http'
 import request from 'request'

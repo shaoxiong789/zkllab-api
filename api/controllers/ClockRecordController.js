@@ -1,12 +1,12 @@
 import { BaseController } from 'express-common-controller';
 import ClockRecord from '../model/ClockRecord.js'
 import ClockValidTime from '../model/ClockValidTime.js'
+import ClockCalendar from '../model/ClockCalendar.js'
 import mongoUtil from '../mongoUtil.js'
 import result from '../result.js'
 import fs from 'fs'
 import path from 'path';
 import images from 'images'
-import axios from 'axios'
 import qiniuUtil from '../qiniuUtil.js'
 import http from 'http'
 import request from 'request'
@@ -14,6 +14,13 @@ const resolve = file => path.resolve(__dirname, file)
 class ClockRecordController extends BaseController {
   constructor() {
     super();
+  }
+
+  //获取当天日签设置
+  async clockCalendar(){
+    var clockCalendar = await ClockCalendar.findOne({day:new Date(new Date().format('YYYY-MM-DD'))})
+
+    return clockCalendar
   }
 
   //用户打卡
@@ -27,6 +34,15 @@ class ClockRecordController extends BaseController {
         msg:"管理员未设置打卡时间"
       }))
     }
+    var clockCalendar = await this.clockCalendar()
+
+    if(!clockCalendar){
+      this.res.json(result.error({
+        msg:"管理员未开放今日打卡"
+      }))
+    }
+
+
     var currentHours = new Date().getHours()
     //得出是上午打卡，还是下午打卡
     var clockType ;//打卡类型 （1:早上，2:晚上）
@@ -63,6 +79,16 @@ class ClockRecordController extends BaseController {
     //
     // .encode("png", {operation:50})
 
+    var todayImgRes = await qiniuUtil.request('029b0ac9a13e306c66c5ec2d.png');
+
+    var imgs = images(todayImgRes.body).encode("png");
+
+    this.res.writeHead(200, {"Content-Type": todayImgRes.response.headers['content-type']});
+    this.res.write(imgs);
+    this.res.end();
+
+
+    return ;
 
     if(!clockRecord){
       let doc = await mongoUtil.updateOrSave(ClockRecord,{
