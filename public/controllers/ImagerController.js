@@ -82,16 +82,20 @@ var ImagerController = function (_BaseController) {
     value: function upload() {
       var _this2 = this;
 
-      // var img = fs.readFileSync(resolve('../../img/brandNewImg.jpeg'));
+      // var img = fs.readFileSync(resolve('../../img/WechatIMG482.jpeg'));
+      // console.log(img)
       // console.log(md5(img));
       // 解析一个文件上传
       var form = new _multiparty2.default.Form();
       form.parse(this.req, function (err, fields, files) {
         if (fields.img) {
-          var img = fields.img[0];
-          var md5id = (0, _md2.default)(img).substr(0, 24);
+          var img = fields.img[0].replace(/^data:image\/\w+;base64,/, '');
+          var imgBuffer = new Buffer(img, 'base64');
+          var imgs = (0, _images2.default)(640, 800).fill(255, 255, 255).draw((0, _images2.default)(imgBuffer).size(640, 500), 0, 0).encode("png", { operation: 50 });
+
+          var md5id = (0, _md2.default)(imgs).substr(0, 24);
           var imgname = md5id + '.png';
-          _qiniuUtil2.default.upload(img, imgname, function (ret) {
+          _qiniuUtil2.default.upload(imgs, imgname, function (ret) {
             _mongoUtil2.default.updateOrSave(_Imager2.default, {
               _id: md5id,
               pathname: imgname
