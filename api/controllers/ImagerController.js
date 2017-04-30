@@ -27,11 +27,15 @@ class ImagerController extends BaseController {
     form.parse(this.req, (err, fields, files) =>{
       if(fields.img){
         var img = fields.img[0].replace(/^data:image\/\w+;base64,/, '');
-
         var imgBuffer = new Buffer(img,'base64');
-        var md5id = md5(imgBuffer).substr(0,24);
+        var imgs = images(640,800).fill(255,255,255)
+        .draw(images(imgBuffer).size(640,500), 0, 0)
+
+        .encode("png", {operation:50})
+
+        var md5id = md5(imgs).substr(0,24);
         var imgname = `${md5id}.png`
-        qiniuUtil.upload(imgBuffer,imgname,(ret)=>{
+        qiniuUtil.upload(imgs,imgname,(ret)=>{
           mongoUtil.updateOrSave(Imager,{
             _id:md5id,
             pathname:imgname
