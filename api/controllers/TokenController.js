@@ -5,7 +5,8 @@ class TokenController extends BaseController {
   }
 
   token() {
-      this.render("helloToken")
+    var echostr = this.req.query.echostr;
+      this.render(echostr)
   }
 
 }
