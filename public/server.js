@@ -1,5 +1,5 @@
 'use strict';
-
+var wx = require("wechat-toolkit");
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -9,6 +9,7 @@ var http = require('http');
 var url = require('url');
 require('date-format-lite');
 
+app.use(wx.xml_parser());
 // parse application/json
 app.use(bodyParser.json());
 
