@@ -45,6 +45,7 @@
     "readof": "^0.9.5",
     "request": "^2.81.0",
     "split": "^1.0.0",
-    "stream-splicer": "^2.0.0"
+    "stream-splicer": "^2.0.0",
+    "wechat-toolkit": "^0.2.19"
   }
 }
