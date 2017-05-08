@@ -6,12 +6,12 @@ module.exports =
   // ObjectId = Schema.ObjectId;
   var ClockValidTimeSchema = new Schema({
     morning:{
-      startTime   :Number,
-      endTime     :Number
+      startTime   :String,
+      endTime     :String
     },
     night:{
-      startTime   :Number,
-      endTime     :Number
+      startTime   :String,
+      endTime     :String
     },
     createTime    :Date,
     updateTime    :Date

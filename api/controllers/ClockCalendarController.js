@@ -38,6 +38,24 @@ class ClockCalendarController extends BaseController {
 
   }
 
+  async detail(){
+    if(!this.req.query.day){
+      this.res.json(result.error({
+        msg:"日期不能为空"
+      }))
+      return;
+    }
+    var clockCalendar = await ClockCalendar.findOne({day:new Date(this.req.query.day)})
+    if(!clockCalendar){
+      this.res.json(result.error({
+        msg:"数据不存在"
+      }))
+      return;
+    }
+
+    this.res.json(result.success(clockCalendar))
+  }
+
   //获取日签列表
   async list(){
     var startDay = this.req.query.startDay;

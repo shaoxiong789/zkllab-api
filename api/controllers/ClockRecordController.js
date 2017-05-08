@@ -117,6 +117,7 @@ class ClockRecordController extends BaseController {
     var bean;
     var doc =  await ClockValidTime.findOne();
     if(doc){
+      console.log(this.req.body)
       doc.morning = this.req.body.morning;
       doc.night   = this.req.body.night;
       doc.updateTime = new Date();

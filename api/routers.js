@@ -34,6 +34,9 @@ router.get('/clock/tap','ClockRecordController#tap')
 //保存日签设置
 router.post('/clock/calendar/save','ClockCalendarController#save')
 
+//获取日签设置
+router.get('/clock/calendar/detail','ClockCalendarController#detail')
+
 //获取日签列表
 router.get('/clock/calendar/list','ClockCalendarController#list')
 
@@ -41,6 +44,6 @@ router.get('/clock/calendar/list','ClockCalendarController#list')
 //微信设置模块
 
 // 服务器token校验
-router.get('/token','TokenController#token')
+router.get('/weixin/message','WeixinController#message')
 
 module.exports = router.routes();
