@@ -1,10 +1,13 @@
 import { BaseController } from 'express-common-controller';
+import result from '../result.js'
+import axios from 'axios';
 var wx = require("wechat-toolkit");
 
 var config = {
   token: 'helloToken',
   appid: 'wx1461086a049a6883',
   encodingAESKey: 'ELTp5IOAQIaOa9pP99xnqNviw0Ofn1Wy06KHDtqoYqC',
+  appSecret: '497429c8c195a0ad3009a3aeaa1a6033',
   checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 class WeixinController extends BaseController {
@@ -64,19 +67,40 @@ class WeixinController extends BaseController {
   }
 
   //获取公众号access_token
-  getAccessToken() {
-    return Promise((resolve, reject)=>{
-      wx.getAccessToken("app_id", "app_secret", function(err, access_token){
-
+  async getAccessToken() {
+    return new Promise((resolve, reject)=>{
+      wx.getAccessToken(config.appid, config.appSecret, function(err, access_token){
           if(err){
             reject(err)
             console.log(err);
             return;
           }
           resolve(access_token)
-          console.log(access_token);
       });
     })
+  }
+
+  //获取素材列表
+  async mediaList() {
+    var accesstoken = await this.getAccessToken();
+    this.res.send(accesstoken)
+  }
+
+  async syncNews() {
+    var accesstoken = await this.getAccessToken();
+    var docs = await axios.post('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token='+accesstoken,{
+      "type":"news",
+      "offset":Number(this.req.query.pageSize*(this.req.query.currentPage-1)),
+      "count":Number(this.req.query.pageSize)
+    });
+    var page = {};
+    page.currentPage = this.req.query.currentPage;
+    page.pageSize = this.req.query.pageSize;
+    page.total = docs.data.total_count;
+    this.res.json(result.success({
+      page:page,
+      content:docs.data.item
+    }));
 
   }
 

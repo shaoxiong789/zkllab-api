@@ -71,7 +71,7 @@ class ImagerController extends BaseController {
   // 图片列表
   list(){
     // {currentPage:null,pageSize:null,total:null}
-    mongoUtil.findPageList(Imager.find(),{
+    mongoUtil.findPageList(Imager.find({}),{
       currentPage:this.req.query.currentPage,
       pageSize:this.req.query.pageSize
     }).then((docs)=>{

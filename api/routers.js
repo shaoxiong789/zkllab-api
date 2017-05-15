@@ -46,4 +46,7 @@ router.get('/clock/calendar/list','ClockCalendarController#list')
 // 服务器token校验
 router.get('/weixin/message','WeixinController#message')
 
+//同步图文消息
+router.get('/weixin/sync/news','WeixinController#syncNews')
+
 module.exports = router.routes();

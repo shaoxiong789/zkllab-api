@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "asyn-flow": "git://github.com/shaoxiong789/asyn-flow.git",
+    "axios": "^0.16.1",
     "body-parser": "^1.17.1",
     "date-format-lite": "^0.9.2",
     "express": "^4.15.2",
