@@ -49,4 +49,7 @@ router.get('/weixin/message','WeixinController#message')
 //同步图文消息
 router.get('/weixin/sync/news','WeixinController#syncNews')
 
+//获取图文消息分页信息
+router.get('/weixin/news/list','WeixinController#newsList')
+
 module.exports = router.routes();

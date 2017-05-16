@@ -1,6 +1,8 @@
 import { BaseController } from 'express-common-controller';
 import result from '../result.js'
 import axios from 'axios';
+import News from '../model/News.js'
+import mongoUtil from '../mongoUtil.js'
 var wx = require("wechat-toolkit");
 
 var config = {
@@ -86,6 +88,21 @@ class WeixinController extends BaseController {
     this.res.send(accesstoken)
   }
 
+  //图文素材列表接口
+  async newsList() {
+
+    var query = {};
+    if(this.req.query.title){
+      query['content.news_item.title'] = {$regex:this.req.query.title}
+    }
+    var docs = await mongoUtil.findPageList(News.find(query),{
+      currentPage:this.req.query.currentPage,
+      pageSize:this.req.query.pageSize
+    });
+    this.res.json(result.success(docs))
+  }
+
+  //图文素材同步接口
   async syncNews() {
     var accesstoken = await this.getAccessToken();
     var docs = await axios.post('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token='+accesstoken,{
@@ -93,15 +110,27 @@ class WeixinController extends BaseController {
       "offset":Number(this.req.query.pageSize*(this.req.query.currentPage-1)),
       "count":Number(this.req.query.pageSize)
     });
+
+    for(var index in docs.data.item){
+      var news = await News.findOne({'media_id':docs.data.item[index].media_id});
+      if(!news){
+        await News({
+          media_id:docs.data.item[index].media_id,
+          content:{
+            news_item:docs.data.item[index].content.news_item[0]
+          },
+          create_time:docs.data.item[index].content.create_time,
+          update_time:docs.data.item[index].update_time
+        }).save()
+      }
+    }
     var page = {};
     page.currentPage = this.req.query.currentPage;
     page.pageSize = this.req.query.pageSize;
     page.total = docs.data.total_count;
     this.res.json(result.success({
-      page:page,
-      content:docs.data.item
+      page:page
     }));
-
   }
 
 }
