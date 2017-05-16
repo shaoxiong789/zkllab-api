@@ -52,4 +52,7 @@ router.get('/weixin/sync/news','WeixinController#syncNews')
 //获取图文消息分页信息
 router.get('/weixin/news/list','WeixinController#newsList')
 
+//获取素材数量
+router.get('/weixin/news/count','WeixinController#newsCount')
+
 module.exports = router.routes();

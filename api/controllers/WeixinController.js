@@ -102,6 +102,12 @@ class WeixinController extends BaseController {
     this.res.json(result.success(docs))
   }
 
+  async newsCount() {
+    var accesstoken = await this.getAccessToken();
+    var docs = await axios.post('https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token='+accesstoken);
+    this.res.send(result.success(docs.data))
+  }
+
   //图文素材同步接口
   async syncNews() {
     var accesstoken = await this.getAccessToken();
