@@ -10,6 +10,8 @@ import images from 'images'
 import qiniuUtil from '../qiniuUtil.js'
 import http from 'http'
 import request from 'request'
+import axios from 'axios';
+import WeixinController from './WeixinController.js'
 const resolve = file => path.resolve(__dirname, file)
 class ClockRecordController extends BaseController {
   constructor() {
@@ -132,6 +134,15 @@ class ClockRecordController extends BaseController {
     var response =await mongoUtil.updateOrSave(ClockValidTime,bean);
     this.res.json(result.success(response));
 
+  }
+
+  //打卡用户信息
+  async user(){
+    // https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+    var accesstoken = await new WeixinController().getAccessToken();
+    var docs = await axios.post('https://api.weixin.qq.com/cgi-bin/user/info?access_token='+accesstoken
+    +"&openid="+"o64OHt7dDtvWYm-OWc8j8VMYtrGo");
+    this.res.send(result.success(docs.data))
   }
 
 }

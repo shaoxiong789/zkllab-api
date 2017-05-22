@@ -31,6 +31,9 @@ router.get('/clock/setting','ClockRecordController#getting')
 //用户打卡
 router.get('/clock/tap','ClockRecordController#tap')
 
+//打卡用户信息
+router.get('/clock/user','ClockRecordController#user')
+
 //保存日签设置
 router.post('/clock/calendar/save','ClockCalendarController#save')
 
@@ -54,5 +57,11 @@ router.get('/weixin/news/list','WeixinController#newsList')
 
 //获取素材数量
 router.get('/weixin/news/count','WeixinController#newsCount')
+
+//微信菜单保存
+router.post('/weixin/menu/save','WeixinController#menuSave')
+
+//微信菜单获取
+router.get('/weixin/menu/detail','WeixinController#menuDetail')
 
 module.exports = router.routes();

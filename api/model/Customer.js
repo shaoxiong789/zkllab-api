@@ -16,7 +16,7 @@ module.exports =
       nightCredits    : Number,//晚上打卡的积分
       openid          : String,//微信唯一标示
       headUrl         : String,//头像url
-      friends         : Array
+      friends         : Array //我添加的好友
   });
   var Customer = mongoose.model('Customer', CustomerSchema);
   return Customer;

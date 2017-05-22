@@ -3,6 +3,7 @@ import result from '../result.js'
 import axios from 'axios';
 import News from '../model/News.js'
 import mongoUtil from '../mongoUtil.js'
+import WeixinMenu from '../model/WeixinMenu.js'
 var wx = require("wechat-toolkit");
 
 var config = {
@@ -25,7 +26,7 @@ class WeixinController extends BaseController {
   }
 
   //创建微信菜单
-  createMenu() {
+  async menuSave() {
     var obj = {
         "button" : [
             {
@@ -55,17 +56,34 @@ class WeixinController extends BaseController {
             }
         ]
     };
+    var queryDoc = await WeixinMenu.findOne();
 
-    menus.createMenu(access_token, obj, function(err, error_code, error_message){
+    var saveObj = {
+      menu:this.req.body,
+      createTime:new Date(),
+      updateTime:new Date()
+    }
+    if(queryDoc){
+      saveObj._id = queryDoc._id;
+    }
+    var doc = await mongoUtil.updateOrSave(WeixinMenu,saveObj);
+    this.res.json(result.success(doc));
+    // menus.createMenu(access_token, obj, function(err, error_code, error_message){
+    //
+    //     if(err){
+    //         console.log(err);
+    //         return;
+    //     }
+    //
+    //     console.log(error_code);
+    //     console.log(error_message)
+    // });
+  }
 
-        if(err){
-            console.log(err);
-            return;
-        }
-
-        console.log(error_code);
-        console.log(error_message)
-    });
+  //菜单详情
+  async menuDetail(){
+    var doc = await WeixinMenu.findOne();
+    this.res.json(result.success(doc))
   }
 
   //获取公众号access_token
@@ -138,6 +156,8 @@ class WeixinController extends BaseController {
       page:page
     }));
   }
+
+
 
 }
 
